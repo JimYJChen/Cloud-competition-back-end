@@ -3,11 +3,7 @@ package com.hsbc.ins.rec.response;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
 public class JsonResult {
 	
 	public static final int FAILURE = 0;
@@ -30,6 +26,20 @@ public class JsonResult {
 	
 	private String correlationInd;
 	
+	public JsonResult() {
+	
+	}
+	
+	public JsonResult(int status2, String message2, Object data, Object exception2, String timestamp2, String errorCode2, String correlationInd) {
+		this.status = status2;
+		this.message = message2;
+		this.result = data;
+		this.exception = exception2;
+		this.timestamp = timestamp2;
+		this.errorCode = errorCode2;
+		this.correlationInd = correlationInd;
+	}
+
 	public static JsonResult success(final String message) {
 		return success(message, null);
 	}
@@ -120,16 +130,22 @@ public class JsonResult {
 	public void setCorrelationInd(String correlationInd) {
 		this.correlationInd = correlationInd;
 	}
-
-
-	@NoArgsConstructor
-	@AllArgsConstructor
+	
 	static class ErrorResponse{
 		
 		private String uri;
 		
 		private String errorMsg;
 		
+		public ErrorResponse() {
+		
+		}
+		
+		public ErrorResponse(String uri, String errorMsg) {
+			this.uri = uri;
+			this.errorMsg = errorMsg;
+		}
+
 		public String getUri() {
 			return uri;
 		}

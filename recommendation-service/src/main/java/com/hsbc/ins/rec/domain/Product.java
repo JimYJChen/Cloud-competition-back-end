@@ -36,7 +36,7 @@ public class Product implements Serializable{
 	private String title;
 	
 	@Column(name="goods_desc")
-	private String descriptin;
+	private String description;
 	
 	@Column(name="goods_pic1")
 	private String imagePath1;
@@ -46,7 +46,7 @@ public class Product implements Serializable{
 	
 	@OneToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name = "goods_category_id")
-	private long categoryId;
+	private ProdCategory prodCategory;
 	
 	@Embedded
 	private CurrencyAmount proAmount;
@@ -71,12 +71,12 @@ public class Product implements Serializable{
 		this.title = title;
 	}
 
-	public String getDescriptin() {
-		return descriptin;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescriptin(String descriptin) {
-		this.descriptin = descriptin;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getImagePath1() {
@@ -95,12 +95,12 @@ public class Product implements Serializable{
 		this.imagePath2 = imagePath2;
 	}
 
-	public long getCategoryId() {
-		return categoryId;
+	public ProdCategory getProdCategory() {
+		return prodCategory;
 	}
 
-	public void setCategoryId(long categoryId) {
-		this.categoryId = categoryId;
+	public void setProdCategory(ProdCategory prodCategory) {
+		this.prodCategory = prodCategory;
 	}
 
 	public Date getCreateTime() {

@@ -39,10 +39,11 @@ public class RedisConfigurer extends CachingConfigurerSupport {
 
     }
 	
-	@Bean
-    public CacheManager cacheManager(@SuppressWarnings("rawtypes") RedisCacheWriter redisTemplate) {
-        return new RedisCacheManager(redisTemplate,null);
-    }
+	/*
+	 * @Bean public CacheManager cacheManager(@SuppressWarnings("rawtypes")
+	 * RedisCacheWriter redisTemplate) { return new
+	 * RedisCacheManager(redisTemplate,null); }
+	 */
 
     @Bean
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
