@@ -30,22 +30,6 @@ public class JsonResult {
 	
 	private String correlationInd;
 	
-	public JsonResult(int status, String message, Object data, Object exception, String timestamp, String errorCode, String correlationInd) {
-		this.status = status;
-		
-		this.message = message;
-		
-		this.result = data;
-		
-		this.exception = exception;
-		
-		this.timestamp = timestamp;
-		
-		this.errorCode = errorCode;
-		
-		this.correlationInd = correlationInd;
-	}
-
 	public static JsonResult success(final String message) {
 		return success(message, null);
 	}
@@ -80,7 +64,6 @@ public class JsonResult {
 		String timestamp = forrmator.format(date);
 		return new JsonResult(status, message, data, exception, timestamp, errorCode, UUID.randomUUID().toString());
 	}
-	
 	
 	public int getStatus() {
 		return status;
@@ -147,12 +130,6 @@ public class JsonResult {
 		
 		private String errorMsg;
 		
-		public ErrorResponse(String uri, String errorMsg) {
-			// TODO Auto-generated constructor stub
-			this.uri = uri;
-			this.errorMsg = errorMsg;
-		}
-
 		public String getUri() {
 			return uri;
 		}
