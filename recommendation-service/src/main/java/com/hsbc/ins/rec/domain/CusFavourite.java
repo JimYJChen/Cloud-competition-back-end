@@ -29,18 +29,25 @@ public class CusFavourite implements Serializable{
 	@Column(name="fav_id")
 	private long favouriteId;
 	
-	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "customerId", referencedColumnName = "user_id")
-	private Customer customer;
+	@Column(name = "user_id")
+	private Long customerId;
 	
 	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "productId", referencedColumnName = "goods_id")
+	@JoinColumn(name = "goods_id")
 	private Product product;
 	
 	@Column(name="crt_datetime")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
-
+	
+	public CusFavourite() {
+		
+	}
+	
+	public CusFavourite(Product product) {
+		this.product = product;
+	}
+	
 	public long getFavouriteId() {
 		return favouriteId;
 	}
@@ -49,12 +56,12 @@ public class CusFavourite implements Serializable{
 		this.favouriteId = favouriteId;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public Product getProduct() {

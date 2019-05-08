@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="t_recommendation_cf_user")
-public class CfUserBase   implements Serializable{
+public class CfUserBase implements Serializable{
 
 	/**
 	 * 
@@ -27,12 +27,11 @@ public class CfUserBase   implements Serializable{
 	@Column(name="rec_id")
 	private long cfUserBaseId;
 	
-	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "customerId", referencedColumnName = "user_id")
-	private Customer customer;
+	@Column(name="user_id")
+	private long customerId;
 	
 	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "productId", referencedColumnName = "goods_id")
+	@JoinColumn(name = "goods_id")
 	private Product product;
 	
 	@Column(name="rating")
@@ -46,12 +45,12 @@ public class CfUserBase   implements Serializable{
 		this.cfUserBaseId = cfUserBaseId;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
 	}
 
 	public Product getProduct() {

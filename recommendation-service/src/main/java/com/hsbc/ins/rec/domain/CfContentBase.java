@@ -27,12 +27,11 @@ public class CfContentBase implements Serializable{
 	@Column(name="rec_id")
 	private long cfItemBaseId;
 	
-	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "customerId", referencedColumnName = "user_id")
-	private Customer customer;
+	@Column(name="user_id")
+	private long customerId;
 	
 	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "productId", referencedColumnName = "goods_id")
+	@JoinColumn(name = "goods_id")
 	private Product product;
 	
 	@Column(name="rating")
@@ -46,12 +45,12 @@ public class CfContentBase implements Serializable{
 		this.cfItemBaseId = cfItemBaseId;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
 	}
 
 	public Product getProduct() {

@@ -49,7 +49,7 @@ public class Product implements Serializable{
 	private ProdCategory prodCategory;
 	
 	@Embedded
-	private CurrencyAmount proAmount;
+	private CurrencyAmount prodAmount;
 	
 	@Column(name="crt_datetime")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -111,13 +111,12 @@ public class Product implements Serializable{
 		this.createTime = createTime;
 	}
 
-	public CurrencyAmount getProAmount() {
-		return proAmount;
+	public CurrencyAmount getProdAmount() {
+		return prodAmount;
 	}
 
-	public void setProAmount(CurrencyAmount proAmount) {
-		this.proAmount = proAmount;
+	public void setProdAmount(CurrencyAmount prodAmount) {
+		this.prodAmount = prodAmount;
 	}
-	
 	
 }

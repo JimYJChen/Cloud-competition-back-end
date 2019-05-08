@@ -1,7 +1,7 @@
 package com.hsbc.ins.rec.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,9 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="t_order")
@@ -31,13 +32,27 @@ public class Order implements Serializable{
 	@Column(name="order_code", length=30)
 	private String orderCode;
 	
-	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "user_id")
-	private Customer customer;
+	@Column(name = "user_id")
+	private Long customerId;
 	
-	@OneToMany(cascade=CascadeType.DETACH)
+	@OneToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name = "goods_id")
-	private List<Product> products;
+	private Product product;
+	
+	@Column(name="crt_datetime")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
+	
+	@Column(name="remark")
+	private String remark;
+	
+	public Order() {
+		
+	}
+	
+	public Order(Product product) {
+		this.product = product;
+	}
 
 	public long getOrderId() {
 		return orderId;
@@ -55,20 +70,36 @@ public class Order implements Serializable{
 		this.orderCode = orderCode;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 }
