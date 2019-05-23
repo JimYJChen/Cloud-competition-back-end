@@ -12,4 +12,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 	
 	List<Order>  findAllByCustomerIdOrderByCreateTimeDesc(Long customerId, Pageable pageable);
 	
+	List<Order>  findAllByCustomerIdOrderByCreateTimeDesc(Long customerId);
+	
 }

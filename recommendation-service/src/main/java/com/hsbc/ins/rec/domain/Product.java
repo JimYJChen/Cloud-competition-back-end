@@ -3,16 +3,14 @@ package com.hsbc.ins.rec.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 /*import lombok.Data;
 import lombok.Getter;
@@ -44,9 +42,8 @@ public class Product implements Serializable{
 	@Column(name="goods_pic2")
 	private String imagePath2;
 	
-	@OneToOne(cascade=CascadeType.DETACH)
-	@JoinColumn(name = "goods_category_id")
-	private ProdCategory prodCategory;
+	@Column(name = "goods_category_id")
+	private long prodCategoryId;
 	
 	@Embedded
 	private CurrencyAmount prodAmount;
@@ -95,12 +92,12 @@ public class Product implements Serializable{
 		this.imagePath2 = imagePath2;
 	}
 
-	public ProdCategory getProdCategory() {
-		return prodCategory;
+	public long getProdCategoryId() {
+		return prodCategoryId;
 	}
 
-	public void setProdCategory(ProdCategory prodCategory) {
-		this.prodCategory = prodCategory;
+	public void setProdCategoryId(long prodCategoryId) {
+		this.prodCategoryId = prodCategoryId;
 	}
 
 	public Date getCreateTime() {

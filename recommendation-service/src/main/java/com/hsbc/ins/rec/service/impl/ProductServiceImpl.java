@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.hsbc.ins.rec.domain.Order;
+import com.hsbc.ins.rec.domain.ProdCategory;
 import com.hsbc.ins.rec.domain.Product;
 import com.hsbc.ins.rec.persistence.OrderRepository;
 import com.hsbc.ins.rec.persistence.ProdCategoryRepository;
@@ -74,5 +76,15 @@ public class ProductServiceImpl implements ProductService {
 	
 	public Order buy(Order order) {
 		return orderRepository.save(order);
+	}
+
+	@Override
+	public List<ProdCategory> loadProdCategorys() {
+		return prodCategoryRepository.findAll();
+	}
+
+	@Override
+	public Page <Product> loadProdsByProdCategory(Long prodCategoryId, int pageNum, int pageLimit) {
+		return  productRepository.findAllByProdCategoryIdOrderByCreateTimeDesc(prodCategoryId, PageRequest.of(pageNum - 1, pageLimit));
 	}
 }
