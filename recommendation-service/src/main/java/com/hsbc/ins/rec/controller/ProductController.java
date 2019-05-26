@@ -2,11 +2,14 @@ package com.hsbc.ins.rec.controller;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +19,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hsbc.ins.rec.domain.Order;
+import com.hsbc.ins.rec.domain.ProdCategory;
 import com.hsbc.ins.rec.domain.Product;
 import com.hsbc.ins.rec.response.JsonResult;
 import com.hsbc.ins.rec.service.ProductService;
 import com.hsbc.ins.rec.utils.JsonRequest;
+import com.hsbc.ins.rec.utils.JsonRequestCategory;
 import com.hsbc.ins.rec.utils.JsonRequestSearch;
 import com.hsbc.ins.rec.utils.Page;
 
@@ -32,24 +37,53 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@PostMapping(value = "loadProductDetail", produces = "application/json;charset=UTF-8")
-	public JsonResult loadingProductDetail(@RequestBody final String jsonString) throws JsonProcessingException {
-		Long customerId;
+	@GetMapping(value = "loadProdCategorys", produces = "application/json;charset=UTF-8")
+	public JsonResult loadingloadProdCategorys() throws JsonProcessingException {
+		JsonResult jsonResult = null;
+		List<ProdCategory> prodCategorys = productService.loadProdCategorys();
+		jsonResult = JsonResult.success("Load product categorys successful.", prodCategorys);
+		return jsonResult;
+	}
+	
+	@PostMapping(value = "loadProductsByProdCategory", produces = "application/json;charset=UTF-8")
+	public JsonResult loadingProductsByProdCategory(@RequestBody final String jsonString) throws JsonProcessingException {
+		JsonRequestCategory jsonRequest;
 		JsonResult jsonResult = null;
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			JsonNode node = objectMapper.readTree(jsonString).get("customerId");
+			jsonRequest = objectMapper.readValue(jsonString, JsonRequestCategory.class);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return JsonResult.fail("Request data is invalid. Expect format " + objectMapper.writeValueAsString(new JsonRequestCategory(new Page())), "501");
+		}
+		org.springframework.data.domain.Page <Product> products = productService.loadProdsByProdCategory(jsonRequest.getProdCategoryId(), jsonRequest.getPage().getPageNum(), jsonRequest.getPage().getPageLimit());
+		Map <String, Object> result = new HashMap<>();
+		result.put("data", products.getContent());
+		result.put("totalPages", products.getTotalPages());
+		result.put("totalElements", products.getTotalElements());
+		jsonResult = JsonResult.success("load products from order successful.", result);
+		return jsonResult;
+	}
+	
+	@PostMapping(value = "loadProductDetail", produces = "application/json;charset=UTF-8")
+	public JsonResult loadingProductDetail(@RequestBody final String jsonString) throws JsonProcessingException {
+		Long productId;
+		JsonResult jsonResult = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			JsonNode node = objectMapper.readTree(jsonString).get("productId");
 			if(null != node) {
-				customerId = node.asLong();
+				productId = node.asLong();
 			}else {
-				return JsonResult.fail("Request data is invalid. The field customerId is missing. Expect format {\"customerId\":\"\"} ", "501");
+				return JsonResult.fail("Request data is invalid. The field customerId is missing. Expect format {\"productId\":\"\"} ", "501");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return JsonResult.fail("Request data is invalid. The field customerId is missing. Expect format {\"customerId\":\"\"} ", "501");
+			return JsonResult.fail("Request data is invalid. The field customerId is missing. Expect format {\"productId\":\"\"} ", "501");
 		}
-		Product product = productService.findProductDetail(customerId);
+		Product product = productService.findProductDetail(productId);
 		jsonResult = JsonResult.success("Load product detail successful.", product);
 		return jsonResult;
 	}

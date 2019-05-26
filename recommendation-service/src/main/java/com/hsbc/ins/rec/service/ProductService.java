@@ -2,7 +2,10 @@ package com.hsbc.ins.rec.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.hsbc.ins.rec.domain.Order;
+import com.hsbc.ins.rec.domain.ProdCategory;
 import com.hsbc.ins.rec.domain.Product;
 
 public interface ProductService {
@@ -20,5 +23,9 @@ public interface ProductService {
 	public List<Order> loadOrders(Long customerId, int pageNum, int pageLimit);
 	
 	public Order buy(Order order);
+	
+	public List<ProdCategory> loadProdCategorys();
+	
+	public Page<Product> loadProdsByProdCategory(Long prodCategoryId, int pageNum, int pageLimit);
 	
 }

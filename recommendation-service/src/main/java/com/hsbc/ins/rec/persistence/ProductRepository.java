@@ -2,6 +2,7 @@ package com.hsbc.ins.rec.persistence;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	List <Product> queryByTitleAndDescriptionLike(String searchWords1, String searchWords2, Pageable pageable);
 	
 	List <Product> findAllByOrderByCreateTimeDesc(Pageable pageable);
+	
+	Page <Product> findAllByProdCategoryIdOrderByCreateTimeDesc(Long prodCategoryId, Pageable pageable);
+	
 }
