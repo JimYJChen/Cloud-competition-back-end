@@ -6,9 +6,9 @@ server:
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://dbrec.cg4zzwk2bpuf.ap-southeast-1.rds.amazonaws.com/dbrec?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: clouder
-    password: Clouder123$%
+    url: jdbc:mysql://47.52.164.224/dbrec?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: dbrec
+    password: dbrec123$
     hikari:
       pool-name: DatebookHikariCP
       maximum-pool-size: 20
