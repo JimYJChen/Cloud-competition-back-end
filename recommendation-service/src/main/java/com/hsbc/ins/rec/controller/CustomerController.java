@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,17 @@ public class CustomerController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return JsonResult.fail("Request data is invalid. Expect format { \"loginName\":\"\", \"loginPassWord\":\"\" } ", "501");
+		}
+		return jsonResult;
+	}
+	
+	@PostMapping(value = "signUp", produces = "application/json;charset=UTF-8")
+	public JsonResult register(@RequestBody @Validated Customer custermor){
+		JsonResult jsonResult = null;
+		if(customerService.register(custermor)) {
+			jsonResult = JsonResult.success("Login successful", custermor);
+		}else {
+			jsonResult = JsonResult.fail("User name already exists!", "502");
 		}
 		return jsonResult;
 	}

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,9 +27,11 @@ public class Customer implements Serializable{
 	@Column(name="user_id")
 	private long customerId;
 	
+	@NotBlank(message = "User name is null!")
 	@Column(name="user_name")
 	private String loginName;
 	
+	@NotBlank(message = "Password is null!")
 	@Column(name="password")
 	private String loginPassword;
 	
@@ -44,6 +47,8 @@ public class Customer implements Serializable{
 	@Column(name="dob")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date dateOfBirth;
+	
+	private Boolean smokerInd;
 
 	public long getCustomerId() {
 		return customerId;
@@ -100,5 +105,13 @@ public class Customer implements Serializable{
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
+
+	public Boolean getSmokerInd() {
+		return smokerInd;
+	}
+
+	public void setSmokerInd(Boolean smokerInd) {
+		this.smokerInd = smokerInd;
+	}
+
 }

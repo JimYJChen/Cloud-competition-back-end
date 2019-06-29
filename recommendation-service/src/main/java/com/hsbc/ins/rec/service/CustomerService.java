@@ -6,4 +6,6 @@ public interface CustomerService {
 	
 	public Customer identify(String userName, String password);
 	
+	public Boolean register(Customer customer);
+	
 }
